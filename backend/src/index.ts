@@ -24,7 +24,7 @@ app.use(cookieParser());
 // dynamically handle routes
 const routeFiles = readdirSync('./src/routes', { encoding: 'utf-8' });
 
-for (let routeFile of routeFiles) {
+for (const routeFile of routeFiles) {
 	const routePath = path.join(__dirname, 'routes', routeFile);
 	
 	import(routePath)
