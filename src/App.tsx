@@ -17,7 +17,7 @@ function App() {
 			<Carousel
 				flickityOptions={flickityOptions}
 				imageCards={cards}
-			></Carousel>
+			/>
 		</div>
 	)
 }

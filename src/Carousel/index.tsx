@@ -30,7 +30,7 @@ function Carousel(options: CarouselOptions) {
 							<h2>{imageCard.title}</h2>
 							<div style={{
 								backgroundImage: `url('/images/${imageCard.path}')`
-							}} className="imageCard-imageDiv"></div>
+							}} className="imageCard-imageDiv" />
 						</div>
 					);
 			})}
