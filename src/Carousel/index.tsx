@@ -17,7 +17,7 @@ type ImageCard = {
 function Carousel(options: CarouselOptions) {
 	return (
 		<Flickity
-			className='Slider'
+			className='slider'
 			elementType='div'
 			disableImagesLoaded={false}
 			options={options.flickityOptions}
@@ -26,11 +26,11 @@ function Carousel(options: CarouselOptions) {
         >
 			{options.imageCards.map((imageCard, index) => {
 					return (
-						<div key={index} className='Plate'>
+						<div key={index} className='plate'>
 							<h2>{imageCard.title}</h2>
 							<div style={{
 								backgroundImage: `url('/images/${imageCard.path}')`
-							}} className="imageCard-imageDiv" />
+							}} className="image-div" />
 						</div>
 					);
 			})}
