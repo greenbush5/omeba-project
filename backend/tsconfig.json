@@ -1,0 +1,22 @@
+{
+	"compilerOptions": {
+		"target": "ES2020",
+		"module": "CommonJS",
+		"strict": true,
+		"outDir": "build",
+		"sourceMap": false,
+		"esModuleInterop": true,
+		"resolveJsonModule": true,
+		"moduleResolution": "node",
+
+		"baseUrl": ".",
+		"paths": {
+			"@root/*": ["../*"]
+		}
+	},
+
+	"ts-node": {
+		"swc": false,
+		"require": ["tsconfig-paths/register"]
+	}
+}

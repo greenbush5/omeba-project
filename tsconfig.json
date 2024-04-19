@@ -1,24 +1,31 @@
 {
-	"compilerOptions": {
-		"target": "ES2020",
-		"module": "CommonJS",
-		"strict": true,
-		"outDir": "build",
-		"sourceMap": false,
-		"esModuleInterop": true,
-		"resolveJsonModule": true,
-		"moduleResolution": "node",
+  "compilerOptions": {
+    "target": "es5",
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
+    "allowJs": true,
+    "skipLibCheck": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "strict": true,
+    "forceConsistentCasingInFileNames": true,
+    "noFallthroughCasesInSwitch": true,
+    "module": "esnext",
+    "moduleResolution": "node",
+    "resolveJsonModule": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "jsx": "react-jsx",
 
-		"baseUrl": ".",
+    "baseUrl": ".",
 		"paths": {
-			// examples of path aliases
-			// "@client": ["./src/Client/index"],
-			// "@services/*": ["./src/Services/*"]
+			"@root/*": ["./*"]
 		}
-	},
-
-	"ts-node": {
-		"swc": false,
-		"require": ["tsconfig-paths/register"]
-	}
+  },
+  "include": [
+    "src"
+  ]
 }
