@@ -22,15 +22,4 @@ function App() {
 		
 	)
 }
-function App1() {
-	return (
-		<div className='App'>
-			<Carousel
-				flickityOptions={flickityOptions}
-				imageCards={cards}
-			/>
-		</div>
-		
-	)
-}
 export default App;
