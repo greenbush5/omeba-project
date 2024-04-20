@@ -11,7 +11,11 @@
 
 		"baseUrl": ".",
 		"paths": {
-			"@root/*": ["../*"]
+			"@root/*": ["../*"],
+			"@models/*": ["./src/models/*"],
+			"@utils/*": ["./src/utils/*"],
+			"@schemas/*": ["./src/schemas/*"],
+			"@middleware/*": ["./src/middleware/*"]
 		}
 	},
 
