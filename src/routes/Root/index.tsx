@@ -9,7 +9,8 @@ export default function Root() {
 					<a href='/team_info'>Welcome</a>
 				</h1>
 			</div>
-			<div className= "text-navigate">
+
+			<div className='text-navigate'>
 				<h3>Click on the welcome text</h3>
 			</div>
 			

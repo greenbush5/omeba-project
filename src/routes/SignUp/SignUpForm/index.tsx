@@ -59,9 +59,9 @@ export default function SignUpForm() {
     const successMessage = () => { 
         return ( 
             <div 
-                className="success"
+                className='success'
                 style={{ 
-                    display: submitted ? "" : "none", 
+                    display: submitted ? '' : 'none', 
                 }} 
             > 
                 <h1>Successfully registered!</h1> 
@@ -72,9 +72,9 @@ export default function SignUpForm() {
     const errorMessage = () => { 
         return ( 
             <div 
-                className="error"
+                className='error'
                 style={{ 
-                    display: error ? "" : "none", 
+                    display: error ? '' : 'none', 
                 }} 
             > 
                 <h1>{error}</h1> 
@@ -83,24 +83,24 @@ export default function SignUpForm() {
     };
 
 	return (
-		<div id="SignUpForm">
+		<div id='SignUpForm'>
 			<div>
 				<h1>User Registration</h1>
 			</div>
 
-			<div className="messages">
+			<div className='messages'>
 				{errorMessage()}
 				{successMessage()}
 			</div>
 
 			<form action='POST'>
-				<label className="label">Email</label>
-				<input onChange={handleEmail} className="input" value={email} type="email" />
+				<label className='label'>Email</label>
+				<input onChange={handleEmail} className='input' value={email} type='email' />
 
-				<label className="label">Password</label>
-				<input onChange={handlePassword} className="input" value={password} type="password" />
+				<label className='label'>Password</label>
+				<input onChange={handlePassword} className='input' value={password} type='password' />
 
-				<button onClick={handleSubmit} className="button" type="submit">Submit</button>
+				<button onClick={handleSubmit} className='button' type='submit'>Submit</button>
 			</form>
 		</div>
 	);
