@@ -53,7 +53,8 @@ router.get('/me', async (req, res) => {
 	res.status(200).send(createResponse({
 		id: foundUser._id,
 		email: foundUser.email,
-		password: foundUser.password
+		password: foundUser.password,
+		pfpUrl: foundUser.pfpUrl
 	}, StatusCodes.OK, true));
 });
 
@@ -108,7 +109,7 @@ router.post('/login', validateRequest({ body: loginUserSchema }), async (req, re
 	);
 });
 
-router.post('/', validateRequest({ body: userSchema }), async (req, res) => {
+router.post('/', validateRequest({ body: loginUserSchema }), async (req, res) => {
 	const session = req.session as CustomSessionData;
 	
 	if (session.userId) {
@@ -142,7 +143,7 @@ router.post('/', validateRequest({ body: userSchema }), async (req, res) => {
 		return;
 	}
 
-	const newUser = new userModel({ _id: new mongoose.Types.ObjectId(), email, password });
+	const newUser = new userModel({ _id: new mongoose.Types.ObjectId(), email, password, pfpUrl: '' });
 	await newUser.save();
 
 	(req.session as CustomSessionData).userId = newUser._id;

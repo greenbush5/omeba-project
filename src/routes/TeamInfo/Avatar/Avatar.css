@@ -1,0 +1,16 @@
+.avatar {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	width: 60px;
+	height: 60px;
+	border-radius: 50%;
+	overflow: hidden;
+	box-shadow: 0 2px 4px rgba(230, 5, 5, 0.2);
+}
+
+.avatar img {
+	width: 100%;
+	height: auto;
+	display: block;
+}

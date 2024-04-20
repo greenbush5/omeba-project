@@ -2,6 +2,7 @@ import './SignUpForm.css';
 
 import { useState } from 'react';
 import axios, { AxiosError } from 'axios';
+axios.defaults.withCredentials = true;
 
 export default function SignUpForm() {
 	const [email, setEmail] = useState('');
