@@ -22,7 +22,7 @@ const sessionOptions: session.SessionOptions = {
 };
 
 const corsOptions: cors.CorsOptions = {
-	origin: '*',
+	origin: 'http://localhost:3001',
 	credentials: true,
 	optionsSuccessStatus: 200
 };
