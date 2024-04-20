@@ -1,25 +1,15 @@
-import Carousel from './Carousel';
-import './App.css';
+import { BrowserRouter , Routes, Route } from 'react-router-dom';
 
-const flickityOptions = {
-	initialIndex: 1
-};
+import Root from './routes/Root';
+import TeamInfo from './routes/TeamInfo';
 
-const cards = [
-	{ title: 'cloud', path: 'cloud.jpg' },
-	{ title: 'tree', path: 'tree.jpg' },
-	{ title: 'tree2', path: 'tree2.jpg' }
-];
-
-function App() {
+export default function App() {
 	return (
-		<div className='App'>
-			<Carousel
-				flickityOptions={flickityOptions}
-				imageCards={cards}
-			/>
-		</div>
-		
-	)
+		<BrowserRouter>
+			<Routes>
+				<Route path='/' element={<Root />} />
+				<Route path='/team_info' element={<TeamInfo />} />
+			</Routes>
+		</BrowserRouter>
+	);
 }
-export default App;

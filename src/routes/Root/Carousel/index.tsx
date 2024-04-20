@@ -14,7 +14,7 @@ type ImageCard = {
 	path: string
 };
 
-function Carousel(options: CarouselOptions) {
+export default function Carousel(options: CarouselOptions) {
 	return (
 		<Flickity
 			className='slider'
@@ -37,5 +37,3 @@ function Carousel(options: CarouselOptions) {
 		</Flickity>
 	);
 }
-
-export default Carousel;
