@@ -167,3 +167,14 @@ a {
 	color: inherit;
 	text-decoration: inherit;
 }
+.text-navigate{
+	color:#aeaeae;
+	font-size: 55px;
+	font-style: bold;
+	z-index: 10;
+	margin:0;
+	position: absolute;
+	top: 50%; 
+	left: 41%;
+	transform: translateY(50%);
+}
