@@ -87,7 +87,6 @@ router.post('/login', validateRequest({ body: loginUserSchema }), async (req, re
 	(req.session as CustomSessionData).userId = foundUser._id;
 	req.session.save();
 
-	console.log(req.sessionID);
 	console.log(`[GET /users/login] User logged in with email '${email}' and password '${password}'`);
 	res.send(createResponse('Successfully logged in', StatusCodes.OK, true));
 });
