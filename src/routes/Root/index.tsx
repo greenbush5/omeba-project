@@ -5,7 +5,9 @@ export default function Root() {
 	return (
 		<div id='Root'>
 			<div className='text-container'>
-				<h1>Welcome</h1>
+				<h1>
+					<a href='/team_info'>Welcome</a>
+				</h1>
 			</div>
 			
 			<div className='backwrap gradient'>

@@ -162,3 +162,8 @@
 		background-position: right top;
 	}   
 }
+
+a {
+	color: inherit;
+	text-decoration: inherit;
+}
