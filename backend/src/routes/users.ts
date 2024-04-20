@@ -6,8 +6,10 @@ import { StatusCodes } from 'http-status-codes';
 
 import session from 'express-session';
 import createResponse from '@utils/response';
-import { model as userModel, schema as userSchema } from '@models/user';
-import loginUserSchema from '@schemas/loginUser';
+import userModel from '@models/user';
+
+import registerUser from '@schemas/registerUser';
+import loginUser from '@schemas/registerUser';
 
 import { hashSync, compareSync } from 'bcrypt';
 const SALT_ROUNDS = 10;
@@ -53,12 +55,15 @@ router.get('/me', async (req, res) => {
 	res.status(200).send(createResponse({
 		id: foundUser._id,
 		email: foundUser.email,
+		username: foundUser.username,
 		password: foundUser.password,
-		pfpUrl: foundUser.pfpUrl
+		pfpUrl: foundUser.pfpUrl,
+		isTeamLeader: foundUser.isTeamLeader,
+		teamMembers: foundUser.teamMembers
 	}, StatusCodes.OK, true));
 });
 
-router.post('/login', validateRequest({ body: loginUserSchema }), async (req, res) => {
+router.post('/login', validateRequest({ body: loginUser }), async (req, res) => {
 	const session = req.session as CustomSessionData;
 	
 	if (session.userId) {
@@ -109,7 +114,7 @@ router.post('/login', validateRequest({ body: loginUserSchema }), async (req, re
 	);
 });
 
-router.post('/', validateRequest({ body: loginUserSchema }), async (req, res) => {
+router.post('/', validateRequest({ body: registerUser }), async (req, res) => {
 	const session = req.session as CustomSessionData;
 	
 	if (session.userId) {
@@ -128,7 +133,7 @@ router.post('/', validateRequest({ body: loginUserSchema }), async (req, res) =>
 		}
 	}
 
-	const { email } = req.body;
+	const { email, username } = req.body;
 	const password = hashSync(req.body.password, SALT_ROUNDS);
 
 	const foundUser = await userModel.findOne({ email }).exec();
@@ -143,7 +148,16 @@ router.post('/', validateRequest({ body: loginUserSchema }), async (req, res) =>
 		return;
 	}
 
-	const newUser = new userModel({ _id: new mongoose.Types.ObjectId(), email, password, pfpUrl: '' });
+	const newUser = new userModel({
+		_id: new mongoose.Types.ObjectId(),
+		email,
+		username,
+		password,
+		pfpUrl: '',
+		isTeamLeader: false,
+		teamMembers: []
+	});
+
 	await newUser.save();
 
 	(req.session as CustomSessionData).userId = newUser._id;

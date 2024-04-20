@@ -6,6 +6,7 @@ axios.defaults.withCredentials = true;
 
 export default function SignUpForm() {
 	const [email, setEmail] = useState('');
+	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
 
 	const [submitted, setSubmitted] = useState(false);
@@ -13,6 +14,11 @@ export default function SignUpForm() {
 
 	const handleEmail = (e: React.ChangeEvent<HTMLInputElement>) => {
 		setEmail(e.target.value);
+		setSubmitted(false);
+	};
+
+	const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+		setUsername(e.target.value);
 		setSubmitted(false);
 	};
 
@@ -31,7 +37,7 @@ export default function SignUpForm() {
 
 		try {
 			const response = await axios.post('http://localhost:2346/users', {
-				email, password
+				email, username, password
 			});
 
 			console.log(response);
@@ -96,6 +102,9 @@ export default function SignUpForm() {
 			<form action='POST'>
 				<label className='label'>Email</label>
 				<input onChange={handleEmail} className='input' value={email} type='email' />
+
+				<label className='label'>Username</label>
+				<input onChange={handleUsername} className='input' value={username} type='text' />
 
 				<label className='label'>Password</label>
 				<input onChange={handlePassword} className='input' value={password} type='password' />
