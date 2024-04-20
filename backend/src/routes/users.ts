@@ -28,7 +28,10 @@ router.get('/me', async (req, res) => {
 	
 	if (!session.userId) {
 		console.log('[GET /users/me] Attempt to query while logged out');
-		res.send(createResponse('You must be logged in to visit this page', StatusCodes.UNAUTHORIZED, false));
+
+		res.status(StatusCodes.UNAUTHORIZED).send(
+			createResponse('You must be logged in to visit this page', StatusCodes.UNAUTHORIZED, false)
+		);
 
 		return;
 	}
@@ -38,13 +41,16 @@ router.get('/me', async (req, res) => {
 
 	if (!foundUser) {
 		console.log(`[GET /users/me] Session has non-existing user ID '${userId}'`);
-		res.send(createResponse('User with provided ID was not found', StatusCodes.NOT_FOUND, false));
 		session.destroy(() => {});
+
+		res.status(StatusCodes.NOT_FOUND).send(
+			createResponse('User with provided ID was not found', StatusCodes.NOT_FOUND, false)
+		);
 		
 		return;
 	}
 
-	res.send(createResponse({
+	res.status(200).send(createResponse({
 		id: foundUser._id,
 		email: foundUser.email,
 		password: foundUser.password
@@ -59,7 +65,10 @@ router.post('/login', validateRequest({ body: loginUserSchema }), async (req, re
 
 		if (foundUser) {
 			console.log('[GET /users/login] Attempt to login while logged in');
-			res.send(createResponse('You must be logged out to visit this page', StatusCodes.IM_A_TEAPOT, false));
+
+			res.status(StatusCodes.IM_A_TEAPOT).send(
+				createResponse('You must be logged out to visit this page', StatusCodes.IM_A_TEAPOT, false)
+			);
 
 			return;
 		} else {
@@ -72,14 +81,20 @@ router.post('/login', validateRequest({ body: loginUserSchema }), async (req, re
 
 	if (!foundUser) {
 		console.log(`[GET /users/login] Attempt to log into a non-existing user with email '${email}'`);
-		res.send(createResponse('Email or password is incorrect', StatusCodes.BAD_REQUEST, false));
+
+		res.status(StatusCodes.BAD_REQUEST).send(
+			createResponse('Email or password is incorrect', StatusCodes.BAD_REQUEST, false)
+		);
 
 		return;
 	}
 
 	if (!compareSync(password, foundUser.password)) {
 		console.log(`[GET /users/login] Attempt to log into user with email '${email}' with incorrect password '${password}'`);
-		res.send(createResponse('Email or password is incorrect', StatusCodes.BAD_REQUEST, false));
+		
+		res.status(StatusCodes.BAD_REQUEST).send(
+			createResponse('Email or password is incorrect', StatusCodes.BAD_REQUEST, false)
+		);
 
 		return;
 	}
@@ -88,7 +103,9 @@ router.post('/login', validateRequest({ body: loginUserSchema }), async (req, re
 	req.session.save();
 
 	console.log(`[GET /users/login] User logged in with email '${email}' and password '${password}'`);
-	res.send(createResponse('Successfully logged in', StatusCodes.OK, true));
+	res.status(StatusCodes.OK).send(
+		createResponse('Successfully logged in', StatusCodes.OK, true)
+	);
 });
 
 router.post('/', validateRequest({ body: userSchema }), async (req, res) => {
@@ -99,7 +116,10 @@ router.post('/', validateRequest({ body: userSchema }), async (req, res) => {
 
 		if (foundUser) {
 			console.log('[POST /users] Attempt to create user while logged in');
-			res.send(createResponse('You must be logged out to visit this page', StatusCodes.IM_A_TEAPOT, false));
+
+			res.status(StatusCodes.IM_A_TEAPOT).send(
+				createResponse('You must be logged out to visit this page', StatusCodes.IM_A_TEAPOT, false)
+			);
 
 			return;
 		} else {
@@ -114,7 +134,10 @@ router.post('/', validateRequest({ body: userSchema }), async (req, res) => {
 
 	if (foundUser) {
 		console.log(`[POST /users] Attempt to create user with existing email '${email}'`);
-		res.send(createResponse('User with provided email already exists', StatusCodes.BAD_REQUEST, false));
+		
+		res.status(StatusCodes.BAD_REQUEST).send(
+			createResponse('User with provided email already exists', StatusCodes.BAD_REQUEST, false)
+		);
 
 		return;
 	}
@@ -126,7 +149,9 @@ router.post('/', validateRequest({ body: userSchema }), async (req, res) => {
 	req.session.save();
 
 	console.log(`[POST /users] New user created: ${JSON.stringify(newUser.toJSON())}`);
-	res.send(createResponse({ message: 'User successfully created', id: newUser._id }, StatusCodes.OK, true));
+	res.status(StatusCodes.OK).send(
+		createResponse({ message: 'User successfully created', id: newUser._id }, StatusCodes.OK, true)
+	);
 });
 
 /* a global path to this router */

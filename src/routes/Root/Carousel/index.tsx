@@ -1,5 +1,3 @@
-// import React;
-
 import Flickity, { FlickityOptions } from 'react-flickity-component';
 import './flickity.css';
 import './Carousel.css';

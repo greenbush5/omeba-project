@@ -15,7 +15,7 @@ const cards = [
 
 export default function Root() {
 	return (
-		<div className='App'>
+		<div id='Root'>
 			<div className='text-container'>
 				<h1>Welcome</h1>
 			</div>
