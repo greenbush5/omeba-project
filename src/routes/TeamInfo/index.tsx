@@ -22,6 +22,21 @@ export default function TeamInfo() {
 				flickityOptions={flickityOptions}
 				imageCards={cards}
 			/>
-		</div>
+			<div className="context"></div>
+			<div className="area" >
+            <ul className="circles">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+            </ul>
+    </div >
+	</div>
 	);
 }

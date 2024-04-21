@@ -24,8 +24,8 @@ export default function Avatar() {
 	getUrl();
 
 	return (
-		<div className='avatar'>
-			<img src={url} alt='Avatar' />
-		</div>
+	<div className='avatar'>
+			    <img src={url} alt='Avatar' />
+		    </div>
 	);
 }
