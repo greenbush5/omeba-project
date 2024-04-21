@@ -10,6 +10,7 @@ import userModel from '@models/user';
 
 import registerUser from '@schemas/registerUser';
 import loginUser from '@schemas/registerUser';
+import fullUser from '@schemas/fullUser';
 
 import { hashSync, compareSync } from 'bcrypt';
 const SALT_ROUNDS = 10;
@@ -59,8 +60,74 @@ router.get('/me', async (req, res) => {
 		password: foundUser.password,
 		pfpUrl: foundUser.pfpUrl,
 		isTeamLeader: foundUser.isTeamLeader,
-		teamMembers: foundUser.teamMembers
+		teamMembers: foundUser.teamMembers,
+		teamBannerUrl: foundUser.teamBannerUrl
 	}, StatusCodes.OK, true));
+});
+
+router.patch('/me', validateRequest({ body: fullUser.partial() }), async (req, res) => {
+	const session = req.session as CustomSessionData;
+	
+	if (!session.userId) {
+		console.log('[PATCH /users/me] Attempt to query while logged out');
+
+		res.status(StatusCodes.UNAUTHORIZED).send(
+			createResponse('You must be logged in to visit this page', StatusCodes.UNAUTHORIZED, false)
+		);
+
+		return;
+	}
+
+	const { userId } = session;
+	const foundUser = await getUserById(userId);
+
+	if (!foundUser) {
+		console.log(`[PATCH /users/me] Session has non-existing user ID '${userId}'`);
+		session.destroy(() => {});
+
+		res.status(StatusCodes.NOT_FOUND).send(
+			createResponse('User with provided ID was not found', StatusCodes.NOT_FOUND, false)
+		);
+		
+		return;
+	}
+
+	console.log(`[PATCH /users/me] Old user: ${JSON.stringify(foundUser.toJSON())}`);
+	const { email, username, password, pfpUrl, isTeamLeader, teamMembers, teamBannerUrl } = req.body;
+
+	if (email) {
+		foundUser.email = email;
+	}
+
+	if (username) {
+		foundUser.username = username;
+	}
+
+	if (password) {
+		foundUser.password = password;
+	}
+
+	if (pfpUrl) {
+		foundUser.pfpUrl = pfpUrl;
+	}
+
+	if (isTeamLeader) {
+		foundUser.isTeamLeader = isTeamLeader;
+	}
+
+	if (teamMembers) {
+		foundUser.teamMembers = teamMembers;
+	}
+
+	if (teamBannerUrl) {
+		foundUser.teamBannerUrl = teamBannerUrl;
+	}
+
+	foundUser.save();
+	console.log(`[PATCH /users/me] New user: ${JSON.stringify(foundUser.toJSON())}`);
+	res.status(StatusCodes.OK).send(
+		createResponse('Successfully updated user info', StatusCodes.OK, true)
+	);
 });
 
 router.post('/login', validateRequest({ body: loginUser }), async (req, res) => {
@@ -155,7 +222,8 @@ router.post('/', validateRequest({ body: registerUser }), async (req, res) => {
 		password,
 		pfpUrl: '',
 		isTeamLeader: false,
-		teamMembers: []
+		teamMembers: [],
+		teamBannerUrl: ''
 	});
 
 	await newUser.save();
