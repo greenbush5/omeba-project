@@ -1,17 +1,10 @@
 import './Home.css';
 
 import Avatar from './Avatar';
-import Carousel from './Carousel';
+// import Slider from './Carousel';
 
-const flickityOptions = {
-	initialIndex: 1
-};
 
-const cards = [
-	{ title: 'cloud', path: 'cloud.jpg' },
-	{ title: 'tree', path: 'tree.jpg' },
-	{ title: 'tree2', path: 'tree2.jpg' }
-];
+
 
 export default function Home() {
 	return (
@@ -19,12 +12,20 @@ export default function Home() {
 			<div className='context' />
 			<div className='area'>
 				<Avatar href='/signup' />
-
-				<Carousel
-					flickityOptions={flickityOptions}
-					imageCards={cards}
-				/>
-
+				<div className="sld">
+  <input type="radio" name="position" checked />
+  <input type="radio" name="position" />
+  <input type="radio" name="position" />
+  <input type="radio" name="position" />
+  <input type="radio" name="position" />
+  <main id="carousel">
+    <div className="item"></div>
+    <div className="item"></div>
+    <div className="item"></div>
+    <div className="item"></div>
+    <div className="item"></div>
+    </main>
+</div>
 				<ul className='circles'>
 					<li></li>
 					<li></li>
@@ -39,5 +40,6 @@ export default function Home() {
 				</ul>
     		</div>
 		</div>
+
 	);
 }
