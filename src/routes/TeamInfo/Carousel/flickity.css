@@ -6,7 +6,9 @@ https://flickity.metafizzy.co
 	position: relative;
 }
 
-.flickity-enabled:focus { outline: none; }
+.flickity-enabled:focus {
+	outline: none;
+}
 
 .flickity-viewport {
 	overflow: hidden;

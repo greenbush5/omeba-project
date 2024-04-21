@@ -2,7 +2,7 @@ import { BrowserRouter , Routes, Route } from 'react-router-dom';
 
 import Root from './routes/Root';
 import SignUp from './routes/SignUp';
-import TeamInfo from './routes/TeamInfo';
+import Home from './routes/TeamInfo';
 
 export default function App() {
 	return (
@@ -10,7 +10,7 @@ export default function App() {
 			<Routes>
 				<Route path='/' element={<Root />} />
 				<Route path='/signup' element={<SignUp />} />
-				<Route path='/team_info' element={<TeamInfo />} />
+				<Route path='/home' element={<Home />} />
 			</Routes>
 		</BrowserRouter>
 	);

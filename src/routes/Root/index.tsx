@@ -6,7 +6,7 @@ export default function Root() {
 		<div id='Root'>
 			<div className='text-container'>
 				<h1>
-					<a href='/team_info'>Welcome</a>
+					<a href='/home'>Welcome</a>
 				</h1>
 			</div>
 

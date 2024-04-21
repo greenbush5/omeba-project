@@ -1,4 +1,4 @@
-import './TeamInfo.css';
+import './Home.css';
 
 import Avatar from './Avatar';
 import Carousel from './Carousel';
@@ -13,31 +13,31 @@ const cards = [
 	{ title: 'tree2', path: 'tree2.jpg' }
 ];
 
-export default function TeamInfo() {
+export default function Home() {
 	return (
-		<div id="TeamInfo">
-			<Avatar />
-			
-			
-			<div className="context"></div>
-			<div className="area" >
-            <ul className="circles">
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
+		<div id='Home'>
+			<div className='context' />
+			<div className='area'>
+				<Avatar />
+
 				<Carousel
-				flickityOptions={flickityOptions}
-				imageCards={cards}
-			/>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-                    <li></li>
-            </ul>
-    </div >
-	</div>
+					flickityOptions={flickityOptions}
+					imageCards={cards}
+				/>
+
+				<ul className='circles'>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+					<li></li>
+				</ul>
+    		</div>
+		</div>
 	);
 }
