@@ -4,7 +4,11 @@ import { useState } from 'react';
 import axios from 'axios';
 axios.defaults.withCredentials = true;
 
-export default function Avatar() {
+type AvatarProps = {
+	href: string
+};
+
+export default function Avatar(props: AvatarProps) {
 	const [url, setUrl] = useState('/images/default_pfp.png');
 
 	// TODO: fix this
@@ -25,7 +29,9 @@ export default function Avatar() {
 
 	return (
 		<div className='avatar'>
-			<img src={url} alt='Avatar' />
+			<a href={props.href}>
+				<img src={url} alt='Avatar' draggable='false' />
+			</a>
 		</div>
 	);
 }

@@ -18,7 +18,7 @@ export default function Home() {
 		<div id='Home'>
 			<div className='context' />
 			<div className='area'>
-				<Avatar />
+				<Avatar href='/signup' />
 
 				<Carousel
 					flickityOptions={flickityOptions}
