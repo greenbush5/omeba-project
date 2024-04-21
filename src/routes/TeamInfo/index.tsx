@@ -18,10 +18,7 @@ export default function TeamInfo() {
 		<div id="TeamInfo">
 			<Avatar />
 			
-			<Carousel
-				flickityOptions={flickityOptions}
-				imageCards={cards}
-			/>
+			
 			<div className="context"></div>
 			<div className="area" >
             <ul className="circles">
@@ -30,6 +27,10 @@ export default function TeamInfo() {
                     <li></li>
                     <li></li>
                     <li></li>
+				<Carousel
+				flickityOptions={flickityOptions}
+				imageCards={cards}
+			/>
                     <li></li>
                     <li></li>
                     <li></li>
