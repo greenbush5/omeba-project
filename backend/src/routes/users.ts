@@ -105,7 +105,7 @@ router.patch('/me', validateRequest({ body: fullUser.partial() }), async (req, r
 	}
 
 	if (password) {
-		foundUser.password = password;
+		foundUser.password = hashSync(password, SALT_ROUNDS);
 	}
 
 	if (pfpUrl) {
