@@ -8,6 +8,7 @@ export default function SignUpForm() {
 	const [email, setEmail] = useState('');
 	const [username, setUsername] = useState('');
 	const [password, setPassword] = useState('');
+	const [leader, setLeader] = useState(false);
 
 	const [submitted, setSubmitted] = useState(false);
 	const [error, setError] = useState('');
@@ -27,6 +28,11 @@ export default function SignUpForm() {
 		setSubmitted(false);
 	};
 
+	const handleLeader = () => {
+		setLeader(!leader);
+		setSubmitted(false);
+	};
+
 	const handleSubmit = async (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
 		e.preventDefault();
 
@@ -36,8 +42,8 @@ export default function SignUpForm() {
 		}
 
 		try {
-			const response = await axios.post('http://localhost:2346/users', {
-				email, username, password
+			const response = await axios.post('http://91.233.42.135:2346/users', {
+				email, username, password, isTeamLeader: leader
 			});
 
 			console.log(response);
@@ -60,6 +66,11 @@ export default function SignUpForm() {
 
 		setSubmitted(true);
 		setError('');
+
+		// if all succeeds
+		setTimeout(() => {
+			window.location.pathname = '/team_info';
+		}, 2500);
 	}
 
     const successMessage = () => { 
@@ -108,6 +119,9 @@ export default function SignUpForm() {
 
 				<label className='label'>Password</label>
 				<input onChange={handlePassword} className='input' value={password} type='password' />
+
+				<label className='label'>Team Leader</label>
+				<input onChange={handleLeader} className='input' checked={leader} type='checkbox' />
 
 				<button onClick={handleSubmit} className='button' type='submit'>Submit</button>
 			</form>

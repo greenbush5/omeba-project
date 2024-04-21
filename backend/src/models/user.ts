@@ -7,7 +7,8 @@ const userSchema = new mongoose.Schema({
 	pfpUrl: { type: String, required: false },
 	isTeamLeader: { type: Boolean, required: true },
 	teamMembers: { type: [String], required: true },
-	teamBannerUrl: { type: String, required: true }
+	teamBannerUrl: { type: String, required: false },
+	bio: { type: String, required: false }
 });
 
 export default mongoose.model('user', userSchema);

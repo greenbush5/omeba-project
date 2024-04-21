@@ -6,6 +6,7 @@ export default z.object({
 	password: z.string().min(6, 'Password must be at least 6 characters long.'),
 	pfpUrl: z.string().min(1).url('Invalid profile image url.'),
 	isTeamLeader: z.boolean(),
-	teamMembers: z.array(z.string().min(1)),
-	teamBannerUrl: z.string().min(1).url('Invalid banner image url.')
+	teamMembers: z.array(z.string()),
+	teamBannerUrl: z.string().min(1).url('Invalid banner image url.'),
+	bio: z.string()
 });

@@ -14,7 +14,7 @@ export default function Avatar(props: AvatarProps) {
 	// TODO: fix this
 	async function getUrl() {
 		try {
-			const response = await axios.get('http://localhost:2346/users/me');
+			const response = await axios.get('http://91.233.42.135:2346/users/me');
 			console.log(response.data);
 
 			if (response.data.pfpUrl) {

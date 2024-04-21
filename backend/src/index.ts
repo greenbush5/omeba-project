@@ -21,17 +21,11 @@ const sessionOptions: session.SessionOptions = {
 	cookie: { secure: 'auto' }
 };
 
-const corsOptions: cors.CorsOptions = {
-	origin: 'http://localhost:3001',
-	credentials: true,
-	optionsSuccessStatus: 200
-};
-
 app.set('trust proxy', 1);
 
 // middlewares
 app.use(session(sessionOptions));
-app.use(cors(corsOptions));
+app.use(cors({ origin: 'http://91.233.42.135:3001', credentials: true }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());

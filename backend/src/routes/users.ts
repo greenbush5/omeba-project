@@ -61,7 +61,8 @@ router.get('/me', async (req, res) => {
 		pfpUrl: foundUser.pfpUrl,
 		isTeamLeader: foundUser.isTeamLeader,
 		teamMembers: foundUser.teamMembers,
-		teamBannerUrl: foundUser.teamBannerUrl
+		teamBannerUrl: foundUser.teamBannerUrl,
+		bio: foundUser.bio
 	}, StatusCodes.OK, true));
 });
 
@@ -93,7 +94,7 @@ router.patch('/me', validateRequest({ body: fullUser.partial() }), async (req, r
 	}
 
 	console.log(`[PATCH /users/me] Old user: ${JSON.stringify(foundUser.toJSON())}`);
-	const { email, username, password, pfpUrl, isTeamLeader, teamMembers, teamBannerUrl } = req.body;
+	const { email, username, password, pfpUrl, isTeamLeader, teamMembers, teamBannerUrl, bio } = req.body;
 
 	if (email) {
 		foundUser.email = email;
@@ -121,6 +122,10 @@ router.patch('/me', validateRequest({ body: fullUser.partial() }), async (req, r
 
 	if (teamBannerUrl) {
 		foundUser.teamBannerUrl = teamBannerUrl;
+	}
+
+	if (bio) {
+		foundUser.bio = bio;
 	}
 
 	foundUser.save();
@@ -200,7 +205,7 @@ router.post('/', validateRequest({ body: registerUser }), async (req, res) => {
 		}
 	}
 
-	const { email, username } = req.body;
+	const { email, username, isTeamLeader } = req.body;
 	const password = hashSync(req.body.password, SALT_ROUNDS);
 
 	const foundUser = await userModel.findOne({ email }).exec();
@@ -221,9 +226,10 @@ router.post('/', validateRequest({ body: registerUser }), async (req, res) => {
 		username,
 		password,
 		pfpUrl: '',
-		isTeamLeader: false,
+		isTeamLeader,
 		teamMembers: [],
-		teamBannerUrl: ''
+		teamBannerUrl: '',
+		bio: ''
 	});
 
 	await newUser.save();
@@ -234,6 +240,72 @@ router.post('/', validateRequest({ body: registerUser }), async (req, res) => {
 	console.log(`[POST /users] New user created: ${JSON.stringify(newUser.toJSON())}`);
 	res.status(StatusCodes.OK).send(
 		createResponse({ message: 'User successfully created', id: newUser._id }, StatusCodes.OK, true)
+	);
+});
+
+router.get('/members/:id', async (req, res) => {
+	const teamLeaderId = req.params.id;
+	const foundUser = await getUserById(new mongoose.Types.ObjectId(teamLeaderId));
+
+	if (!foundUser) {
+		console.log(`[GET /users/members/${teamLeaderId}] User not found`);
+		res.status(StatusCodes.NOT_FOUND).send(
+			createResponse('User does not exist', StatusCodes.NOT_FOUND, false)
+		);
+
+		return;
+	}
+
+	const teamMemberPromises = foundUser.teamMembers.map(async memberId => {
+		const foundMember = await getUserById(new mongoose.Types.ObjectId(memberId));
+
+		if (!foundMember) {
+			console.error(`[GET /users/members/${teamLeaderId}] Member with ID '${memberId}' does not exist`);
+			return null;
+		}
+
+		return {
+			username: foundMember.username,
+			pfpUrl: foundMember.pfpUrl,
+			bio: foundMember.bio
+		};
+	});
+
+	const teamMembers = await Promise.all(teamMemberPromises);
+	const teamMembersFiltered = teamMembers.filter(member => member !== null);
+
+	console.log(`[GET /users/members/${teamLeaderId}] Team members: ${JSON.stringify(teamMembersFiltered)}`);
+	res.status(StatusCodes.OK).send(
+		createResponse({ members: teamMembersFiltered }, StatusCodes.OK, true)
+	);
+});
+
+router.post('/by_email', async (req, res) => {
+	const email = req.body.email;
+
+	if (!email) {
+		console.error('[GET /users/by_email] Email was not provided');
+		res.status(StatusCodes.BAD_REQUEST).send(
+			createResponse('Email was not provided', StatusCodes.BAD_REQUEST, false)
+		);
+
+		return;
+	}
+
+	const foundUser = await userModel.findOne({ email }).exec();
+
+	if (!foundUser) {
+		console.error(`[GET /users/by_email] User with email ${email} was not found`);
+		res.status(StatusCodes.NOT_FOUND).send(
+			createResponse('User not found', StatusCodes.NOT_FOUND, false)
+		);
+
+		return;
+	}
+
+	console.log(`[GET /users/by_email] User found: ${JSON.stringify(foundUser.toJSON())}`);
+	res.status(StatusCodes.OK).send(
+		createResponse({ id: foundUser._id }, StatusCodes.OK, true)
 	);
 });
 
